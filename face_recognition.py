@@ -1,7 +1,6 @@
 # import re
 from sys import path
-from tkinter import*
-from tkinter import ttk
+from tkinter import Button, Label, Tk, ttk
 from PIL import Image,ImageTk
 import os
 import mysql.connector
@@ -19,8 +18,8 @@ class Face_Recognition:
 
         # This part is image labels setting start 
         # first header image  
-        img=Image.open(r"Images_GUI\banner.jpg")
-        img=img.resize((1366,130),Image.ANTIALIAS)
+        img=Image.open(r"Images_GUI/banner.jpg")
+        img=img.resize((1366,130),Image.Resampling.LANCZOS)
         self.photoimg=ImageTk.PhotoImage(img)
 
         # set image as lable
@@ -28,8 +27,8 @@ class Face_Recognition:
         f_lb1.place(x=0,y=0,width=1366,height=130)
 
         # backgorund image 
-        bg1=Image.open(r"Images_GUI\bg2.jpg")
-        bg1=bg1.resize((1366,768),Image.ANTIALIAS)
+        bg1=Image.open(r"Images_GUI/bg2.jpg")
+        bg1=bg1.resize((1366,768),Image.Resampling.LANCZOS)
         self.photobg1=ImageTk.PhotoImage(bg1)
 
         # set image as lable
@@ -44,8 +43,8 @@ class Face_Recognition:
         # Create buttons below the section 
         # ------------------------------------------------------------------------------------------------------------------- 
         # Training button 1
-        std_img_btn=Image.open(r"Images_GUI\f_det.jpg")
-        std_img_btn=std_img_btn.resize((180,180),Image.ANTIALIAS)
+        std_img_btn=Image.open(r"Images_GUI/f_det.jpg")
+        std_img_btn=std_img_btn.resize((180,180),Image.Resampling.LANCZOS)
         self.std_img1=ImageTk.PhotoImage(std_img_btn)
 
         std_b1 = Button(bg_img,command=self.face_recog,image=self.std_img1,cursor="hand2")
@@ -56,7 +55,7 @@ class Face_Recognition:
     #=====================Attendance===================
 
     def mark_attendance(self,i,r,n):
-        with open("attendance.csv","r+",newline="\n") as f:
+        with open("attendance.csv","r+", newline="\n") as f:
             myDatalist=f.readlines()
             name_list=[]
             for line in myDatalist:
@@ -67,7 +66,7 @@ class Face_Recognition:
                 now=datetime.now()
                 d1=now.strftime("%d/%m/%Y")
                 dtString=now.strftime("%H:%M:%S")
-                f.writelines(f"\n{i}, {r}, {n}, {dtString}, {d1}, Present")
+                f.writelines(f"/n{i}, {r}, {n}, {dtString}, {d1}, Present")
 
 
     #================face recognition==================
@@ -80,31 +79,35 @@ class Face_Recognition:
             
             for (x,y,w,h) in featuers:
                 cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),3)
-                id,predict=clf.predict(gray_image[y:y+h,x:x+w])
+                _,predict=clf.predict(gray_image[y:y+h,x:x+w])
 
                 confidence=int((100*(1-predict/300)))
 
-                conn = mysql.connector.connect(username='root', password='root',host='localhost',database='face_recognition',port=3307)
+                conn = mysql.connector.connect(user='root', password='12345',host='localhost',database='face_recognition',port=3306)
                 cursor = conn.cursor()
+                # print(id)
+                # cursor.execute("select Name from student where Student_ID="+str(id))
+                # n=cursor.fetchone()
+                # n="+".join(n)
 
-                cursor.execute("select Name from student where Student_ID="+str(id))
-                n=cursor.fetchone()
-                n="+".join(n)
+                # cursor.execute("select Roll_No from student where Student_ID="+str(id))
+                # r=cursor.fetchone()
+                # r="+".join(r)
 
-                cursor.execute("select Roll_No from student where Student_ID="+str(id))
-                r=cursor.fetchone()
-                r="+".join(r)
-
-                cursor.execute("select Student_ID from student where Student_ID="+str(id))
-                i=cursor.fetchone()
-                i="+".join(i)
+                # cursor.execute("select Student_ID from student where Student_ID="+str(id))
+                # i=cursor.fetchone()
+                # i="+".join(i)
 
 
                 if confidence > 77:
-                    cv2.putText(img,f"Student_ID:{i}",(x,y-80),cv2.FONT_HERSHEY_COMPLEX,0.8,(64,15,223),2)
-                    cv2.putText(img,f"Name:{n}",(x,y-55),cv2.FONT_HERSHEY_COMPLEX,0.8,(64,15,223),2)
-                    cv2.putText(img,f"Roll-No:{r}",(x,y-30),cv2.FONT_HERSHEY_COMPLEX,0.8,(64,15,223),2)
-                    self.mark_attendance(i,r,n)
+                    # cv2.putText(img,f"Student_ID:{i}",(x,y-80),cv2.FONT_HERSHEY_COMPLEX,0.8,(64,15,223),2)
+                    cv2.putText(img,f"Student_ID:Aaris",(x,y-80),cv2.FONT_HERSHEY_COMPLEX,0.8,(64,15,223),2)
+                    cv2.putText(img,f"Name:",(x,y-55),cv2.FONT_HERSHEY_COMPLEX,0.8,(64,15,223),2)
+                    # cv2.putText(img,f"Name:{n}",(x,y-55),cv2.FONT_HERSHEY_COMPLEX,0.8,(64,15,223),2)
+                    cv2.putText(img,f"Roll-No:",(x,y-30),cv2.FONT_HERSHEY_COMPLEX,0.8,(64,15,223),2)
+                    # cv2.putText(img,f"Roll-No:{r}",(x,y-30),cv2.FONT_HERSHEY_COMPLEX,0.8,(64,15,223),2)
+                    # self.mark_attendance(i,r,n)
+                    self.mark_attendance("i","r","123")
                 else:
                     cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),3)
                     cv2.putText(img,"Unknown Face",(x,y-5),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,0),3)    
@@ -120,13 +123,14 @@ class Face_Recognition:
             return img
         
         faceCascade=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+        
         clf=cv2.face.LBPHFaceRecognizer_create()
         clf.read("clf.xml")
 
         videoCap=cv2.VideoCapture(0)
 
         while True:
-            ret,img=videoCap.read()
+            _,img=videoCap.read()
             img=recognize(img,clf,faceCascade)
             cv2.imshow("Face Detector",img)
 

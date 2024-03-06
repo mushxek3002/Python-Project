@@ -1,9 +1,7 @@
 from sys import path
-from tkinter import*
-from tkinter import ttk
+from tkinter import Button, Label, Tk, ttk
 from PIL import Image,ImageTk
 import os
-import mysql.connector
 import cv2
 import numpy as np
 from tkinter import messagebox
@@ -17,8 +15,8 @@ class Train:
 
         # This part is image labels setting start 
         # first header image  
-        img=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\banner.jpg")
-        img=img.resize((1366,130),Image.ANTIALIAS)
+        img=Image.open(r"Images_GUI/banner.jpg")
+        img=img.resize((1366,130),Image.Resampling.LANCZOS)
         self.photoimg=ImageTk.PhotoImage(img)
 
         # set image as lable
@@ -26,8 +24,8 @@ class Train:
         f_lb1.place(x=0,y=0,width=1366,height=130)
 
         # backgorund image 
-        bg1=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\t_bg1.jpg")
-        bg1=bg1.resize((1366,768),Image.ANTIALIAS)
+        bg1=Image.open(r"Images_GUI/t_bg1.jpg")
+        bg1=bg1.resize((1366,768),Image.Resampling.LANCZOS)
         self.photobg1=ImageTk.PhotoImage(bg1)
 
         # set image as lable
@@ -42,8 +40,8 @@ class Train:
         # Create buttons below the section 
         # ------------------------------------------------------------------------------------------------------------------- 
         # Training button 1
-        std_img_btn=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\t_btn1.png")
-        std_img_btn=std_img_btn.resize((180,180),Image.ANTIALIAS)
+        std_img_btn=Image.open(r"Images_GUI/t_btn1.png")
+        std_img_btn=std_img_btn.resize((180,180),Image.Resampling.LANCZOS)
         self.std_img1=ImageTk.PhotoImage(std_img_btn)
 
         std_b1 = Button(bg_img,command=self.train_classifier,image=self.std_img1,cursor="hand2")
@@ -63,10 +61,10 @@ class Train:
         for image in path:
             img=Image.open(image).convert('L') # conver in gray scale 
             imageNp = np.array(img,'uint8')
-            id=int(os.path.split(image)[1].split('.')[1])
+            _id=int(os.path.split(image)[1].split('.')[1])
 
             faces.append(imageNp)
-            ids.append(id)
+            ids.append(_id)
 
             cv2.imshow("Training",imageNp)
             cv2.waitKey(1)==13
@@ -75,8 +73,9 @@ class Train:
         
         #=================Train Classifier=============
         clf= cv2.face.LBPHFaceRecognizer_create()
+        
         clf.train(faces,ids)
-        clf.write("clf.xml")
+        clf.write("Python-FYP-Face-Recognition-Attendence-System/clf.xml")
 
         cv2.destroyAllWindows()
         messagebox.showinfo("Result","Training Dataset Complated!",parent=self.root)

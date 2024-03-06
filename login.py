@@ -1,5 +1,4 @@
-from tkinter import* 
-from tkinter import ttk
+from tkinter import RIDGE, Button, Frame, Label, StringVar, Tk, Toplevel, ttk
 from PIL import Image,ImageTk
 from tkinter import messagebox
 from register import Register
@@ -26,7 +25,7 @@ class Login:
         self.var_sa=StringVar()
         self.var_pwd=StringVar()
 
-        self.bg=ImageTk.PhotoImage(file=r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\loginBg1.jpg")
+        self.bg=ImageTk.PhotoImage(file=r"Images_GUI/loginBg1.jpg")
         
         lb1_bg=Label(self.root,image=self.bg)
         lb1_bg.place(x=0,y=0, relwidth=1,relheight=1)
@@ -34,8 +33,8 @@ class Login:
         frame1= Frame(self.root,bg="#002B53")
         frame1.place(x=560,y=170,width=340,height=450)
 
-        img1=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\log1.png")
-        img1=img1.resize((100,100),Image.ANTIALIAS)
+        img1=Image.open(r"Images_GUI/log1.png")
+        img1=img1.resize((100,100),Image.Resampling.LANCZOS)
         self.photoimage1=ImageTk.PhotoImage(img1)
         lb1img1 = Label(image=self.photoimage1,bg="#002B53")
         lb1img1.place(x=690,y=175, width=100,height=100)
@@ -44,7 +43,7 @@ class Login:
         get_str.place(x=140,y=100)
 
         #label1 
-        username =lb1= Label(frame1,text="Username:",font=("times new roman",15,"bold"),fg="white",bg="#002B53")
+        username = Label(frame1,text="Username:",font=("times new roman",15,"bold"),fg="white",bg="#002B53")
         username.place(x=30,y=160)
 
         #entry1 
@@ -53,7 +52,7 @@ class Login:
 
 
         #label2 
-        pwd =lb1= Label(frame1,text="Password:",font=("times new roman",15,"bold"),fg="white",bg="#002B53")
+        pwd = Label(frame1,text="Password:",font=("times new roman",15,"bold"),fg="white",bg="#002B53")
         pwd.place(x=30,y=230)
 
         #entry2 
@@ -89,7 +88,7 @@ class Login:
             messagebox.showinfo("Sussessfully","Welcome to Attendance Managment System Using Facial Recognition")
         else:
             # messagebox.showerror("Error","Please Check Username or Password !")
-            conn = mysql.connector.connect(username='root', password='12345',host='localhost',database='face_recognition',port=3306)
+            conn = mysql.connector.connect(user='root', password='12345',host='localhost',database='face_recognition',port=3306)
             mycursor = conn.cursor()
             mycursor.execute("select * from regteach where email=%s and pwd=%s",(
                 self.txtuser.get(),
@@ -117,7 +116,7 @@ class Login:
         elif(self.var_pwd.get()==""):
             messagebox.showerror("Error","Please Enter the New Password!",parent=self.root2)
         else:
-            conn = mysql.connector.connect(username='root', password='root',host='localhost',database='face_recognition',port=3307)
+            conn = mysql.connector.connect(user='root', password='12345',host='localhost',database='face_recognition',port=3306)
             mycursor = conn.cursor()
             query=("select * from regteach where email=%s and ss_que=%s and s_ans=%s")
             value=(self.txtuser.get(),self.var_ssq.get(),self.var_sa.get())
@@ -142,7 +141,7 @@ class Login:
         if self.txtuser.get()=="":
             messagebox.showerror("Error","Please Enter the Email ID to reset Password!")
         else:
-            conn = mysql.connector.connect(username='root', password='root',host='localhost',database='face_recognition',port=3307)
+            conn = mysql.connector.connect(user='root', password='12345',host='localhost',database='face_recognition',port=3306)
             mycursor = conn.cursor()
             query=("select * from regteach where email=%s")
             value=(self.txtuser.get(),)
@@ -161,7 +160,7 @@ class Login:
                 l.place(x=0,y=10,relwidth=1)
                 # -------------------fields-------------------
                 #label1 
-                ssq =lb1= Label(self.root2,text="Select Security Question:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
+                ssq = Label(self.root2,text="Select Security Question:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
                 ssq.place(x=70,y=80)
 
                 #Combo Box1
@@ -172,7 +171,7 @@ class Login:
 
 
                 #label2 
-                sa =lb1= Label(self.root2,text="Security Answer:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
+                sa = Label(self.root2,text="Security Answer:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
                 sa.place(x=70,y=150)
 
                 #entry2 
@@ -180,7 +179,7 @@ class Login:
                 self.txtpwd.place(x=70,y=180,width=270)
 
                 #label2 
-                new_pwd =lb1= Label(self.root2,text="New Password:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
+                new_pwd = Label(self.root2,text="New Password:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
                 new_pwd.place(x=70,y=220)
 
                 #entry2 
@@ -204,8 +203,8 @@ class Face_Recognition_System:
 
 # This part is image labels setting start 
         # first header image  
-        img=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\banner.jpg")
-        img=img.resize((1366,130),Image.ANTIALIAS)
+        img=Image.open(r"Images_GUI/banner.jpg")
+        img=img.resize((1366,130),Image.Resampling.LANCZOS)
         self.photoimg=ImageTk.PhotoImage(img)
 
         # set image as lable
@@ -213,8 +212,8 @@ class Face_Recognition_System:
         f_lb1.place(x=0,y=0,width=1366,height=130)
 
         # backgorund image 
-        bg1=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\bg3.jpg")
-        bg1=bg1.resize((1366,768),Image.ANTIALIAS)
+        bg1=Image.open(r"Images_GUI/bg3.jpg")
+        bg1=bg1.resize((1366,768),Image.Resampling.LANCZOS)
         self.photobg1=ImageTk.PhotoImage(bg1)
 
         # set image as lable
@@ -229,8 +228,8 @@ class Face_Recognition_System:
         # Create buttons below the section 
         # ------------------------------------------------------------------------------------------------------------------- 
         # student button 1
-        std_img_btn=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\std1.jpg")
-        std_img_btn=std_img_btn.resize((180,180),Image.ANTIALIAS)
+        std_img_btn=Image.open(r"Images_GUI/std1.jpg")
+        std_img_btn=std_img_btn.resize((180,180),Image.Resampling.LANCZOS)
         self.std_img1=ImageTk.PhotoImage(std_img_btn)
 
         std_b1 = Button(bg_img,command=self.student_pannels,image=self.std_img1,cursor="hand2")
@@ -240,8 +239,8 @@ class Face_Recognition_System:
         std_b1_1.place(x=250,y=280,width=180,height=45)
 
         # Detect Face  button 2
-        det_img_btn=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\det1.jpg")
-        det_img_btn=det_img_btn.resize((180,180),Image.ANTIALIAS)
+        det_img_btn=Image.open(r"Images_GUI/det1.jpg")
+        det_img_btn=det_img_btn.resize((180,180),Image.Resampling.LANCZOS)
         self.det_img1=ImageTk.PhotoImage(det_img_btn)
 
         det_b1 = Button(bg_img,command=self.face_rec,image=self.det_img1,cursor="hand2",)
@@ -251,8 +250,8 @@ class Face_Recognition_System:
         det_b1_1.place(x=480,y=280,width=180,height=45)
 
          # Attendance System  button 3
-        att_img_btn=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\att.jpg")
-        att_img_btn=att_img_btn.resize((180,180),Image.ANTIALIAS)
+        att_img_btn=Image.open(r"Images_GUI/att.jpg")
+        att_img_btn=att_img_btn.resize((180,180),Image.Resampling.LANCZOS)
         self.att_img1=ImageTk.PhotoImage(att_img_btn)
 
         att_b1 = Button(bg_img,command=self.attendance_pannel,image=self.att_img1,cursor="hand2",)
@@ -262,8 +261,8 @@ class Face_Recognition_System:
         att_b1_1.place(x=710,y=280,width=180,height=45)
 
          # Help  Support  button 4
-        hlp_img_btn=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\hlp.jpg")
-        hlp_img_btn=hlp_img_btn.resize((180,180),Image.ANTIALIAS)
+        hlp_img_btn=Image.open(r"Images_GUI/hlp.jpg")
+        hlp_img_btn=hlp_img_btn.resize((180,180),Image.Resampling.LANCZOS)
         self.hlp_img1=ImageTk.PhotoImage(hlp_img_btn)
 
         hlp_b1 = Button(bg_img,image=self.hlp_img1,cursor="hand2",)
@@ -276,8 +275,8 @@ class Face_Recognition_System:
         # ---------------------------------------------------------------------------------------------------------------------------
         # Start below buttons.........
          # Train   button 5
-        tra_img_btn=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\tra1.jpg")
-        tra_img_btn=tra_img_btn.resize((180,180),Image.ANTIALIAS)
+        tra_img_btn=Image.open(r"Images_GUI/tra1.jpg")
+        tra_img_btn=tra_img_btn.resize((180,180),Image.Resampling.LANCZOS)
         self.tra_img1=ImageTk.PhotoImage(tra_img_btn)
 
         tra_b1 = Button(bg_img,command=self.train_pannels,image=self.tra_img1,cursor="hand2",)
@@ -287,8 +286,8 @@ class Face_Recognition_System:
         tra_b1_1.place(x=250,y=510,width=180,height=45)
 
         # Photo   button 6
-        pho_img_btn=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\qr1.png")
-        pho_img_btn=pho_img_btn.resize((180,180),Image.ANTIALIAS)
+        pho_img_btn=Image.open(r"Images_GUI/qr1.png")
+        pho_img_btn=pho_img_btn.resize((180,180),Image.Resampling.LANCZOS)
         self.pho_img1=ImageTk.PhotoImage(pho_img_btn)
 
         pho_b1 = Button(bg_img,command=self.open_img,image=self.pho_img1,cursor="hand2",)
@@ -298,8 +297,8 @@ class Face_Recognition_System:
         pho_b1_1.place(x=480,y=510,width=180,height=45)
 
         # Developers   button 7
-        dev_img_btn=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\dev.jpg")
-        dev_img_btn=dev_img_btn.resize((180,180),Image.ANTIALIAS)
+        dev_img_btn=Image.open(r"Images_GUI/dev.jpg")
+        dev_img_btn=dev_img_btn.resize((180,180),Image.Resampling.LANCZOS)
         self.dev_img1=ImageTk.PhotoImage(dev_img_btn)
 
         dev_b1 = Button(bg_img,command=self.developr,image=self.dev_img1,cursor="hand2",)
@@ -309,8 +308,8 @@ class Face_Recognition_System:
         dev_b1_1.place(x=710,y=510,width=180,height=45)
 
         # exit   button 8
-        exi_img_btn=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\exi.jpg")
-        exi_img_btn=exi_img_btn.resize((180,180),Image.ANTIALIAS)
+        exi_img_btn=Image.open(r"Images_GUI/exi.jpg")
+        exi_img_btn=exi_img_btn.resize((180,180),Image.Resampling.LANCZOS)
         self.exi_img1=ImageTk.PhotoImage(exi_img_btn)
 
         exi_b1 = Button(bg_img,image=self.exi_img1,cursor="hand2",)

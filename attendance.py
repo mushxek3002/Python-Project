@@ -1,16 +1,8 @@
-# import re
-import re
-from sys import path
-from tkinter import*
-from tkinter import ttk
+from tkinter import BOTH, BOTTOM, END, HORIZONTAL, RIDGE, RIGHT, VERTICAL, W, X, Y, Button, Frame, Label, LabelFrame, StringVar, Tk, ttk
 from PIL import Image,ImageTk
 import os
 import mysql.connector
-import cv2
-import numpy as np
 from tkinter import messagebox
-from time import strftime
-from datetime import datetime
 import csv
 from tkinter import filedialog
 
@@ -34,7 +26,7 @@ class Attendance:
 
         # This part is image labels setting start 
         # first header image  
-        img=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\banner.jpg")
+        img=Image.open(r"Images_GUI/banner.jpg")
         img=img.resize((1366,130),Image.ANTIALIAS)
         self.photoimg=ImageTk.PhotoImage(img)
 
@@ -90,13 +82,6 @@ class Attendance:
 
         student_name_entry = ttk.Entry(left_frame,textvariable=self.var_name,width=15,font=("verdana",12,"bold"))
         student_name_entry.grid(row=1,column=1,padx=5,pady=5,sticky=W)
-
-        #Department
-        # dep_label = Label(left_frame,text="Department:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
-        # dep_label.grid(row=1,column=2,padx=5,pady=5,sticky=W)
-
-        # dep_entry = ttk.Entry(left_frame,textvariable=self.var_dep,width=15,font=("verdana",12,"bold"))
-        # dep_entry.grid(row=1,column=3,padx=5,pady=5,sticky=W)
 
         #time
         time_label = Label(left_frame,text="Time:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
@@ -242,7 +227,7 @@ class Attendance:
             try:
                 Update=messagebox.askyesno("Update","Do you want to Update this Student Attendance!",parent=self.root)
                 if Update > 0:
-                    conn = mysql.connector.connect(username='root', password='root',host='localhost',database='face_recognition',port=3307)
+                    conn = mysql.connector.connect(user='root', password='12345',host='localhost',database='face_recognition',port=3306)
                     mycursor = conn.cursor()
                     mycursor.execute("update stdattendance set std_id=%s,std_roll_no=%s,std_name=%s,std_time=%s,std_date=%s,std_attendance=%s where std_id=%s",( 
                     self.var_id.get(),
@@ -270,7 +255,7 @@ class Attendance:
             try:
                 delete=messagebox.askyesno("Delete","Do you want to Delete?",parent=self.root)
                 if delete>0:
-                    conn = mysql.connector.connect(username='root', password='root',host='localhost',database='face_recognition',port=3307)
+                    conn = mysql.connector.connect(user='root', password='12345',host='localhost',database='face_recognition',port=3306)
                     mycursor = conn.cursor() 
                     sql="delete from stdattendance where std_id=%s"
                     val=(self.var_id.get(),)
@@ -288,7 +273,7 @@ class Attendance:
     # ===========================fatch data form mysql attendance===========
 
     def fetch_data(self):
-        conn = mysql.connector.connect(username='root', password='root',host='localhost',database='face_recognition',port=3307)
+        conn = mysql.connector.connect(user='root', password='12345',host='localhost',database='face_recognition',port=3306)
         mycursor = conn.cursor()
 
         mycursor.execute("select * from stdattendance")
@@ -381,7 +366,7 @@ class Attendance:
             messagebox.showerror("Error","Please Fill All Fields are Required!",parent=self.root)
         else:
             try:
-                conn = mysql.connector.connect(username='root', password='root',host='localhost',database='face_recognition',port=3307)
+                conn = mysql.connector.connect(user='root', password='12345',host='localhost',database='face_recognition',port=3306)
                 mycursor = conn.cursor()
                 mycursor.execute("insert into stdattendance values(%s,%s,%s,%s,%s,%s)",(
                 self.var_id.get(),
@@ -398,41 +383,6 @@ class Attendance:
                 messagebox.showinfo("Success","All Records are Saved in Database!",parent=self.root)
             except Exception as es:
                 messagebox.showerror("Error",f"Due to: {str(es)}",parent=self.root)
-
-
-
-
-
-
-    #     conn = mysql.connector.connect(username='root', password='root',host='localhost',database='face_recognition',port=3307)
-    #     mycursor = conn.cursor()
-    #     if messagebox.askyesno("Confirmation","Are you sure you want to save attendance on database?"):
-    #         for i in mydata:
-    #             uid = i[0]
-    #             uroll = i[1]
-    #             uname = i[2]
-    #             utime = i[3]
-    #             udate = i[4]
-    #             uattend = i[5]
-    #             qury = "INSERT INTO stdattendance(std_id, std_roll_no, std_name, std_time, std_date, std_attendance) VALUES(%s,%s,%s,%s,%s,%s)"
-    #             mycursor.execute(qury,(uid,uroll,uname,utime,udate,uattend))
-    #         conn.commit()
-    #         conn.close()
-    #         messagebox.showinfo("Success","Successfully Updated!",parent=self.root)
-    #     else:
-    #         return False
-
-
-
-
-        # 
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":

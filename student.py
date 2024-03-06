@@ -1,22 +1,11 @@
-from tkinter import* 
-from tkinter import ttk
+
+from tkinter import BOTH, BOTTOM, END, HORIZONTAL, RIDGE, RIGHT, VERTICAL, W, X, Y, Button, Frame, Label, LabelFrame, StringVar, ttk
 from PIL import Image,ImageTk
 from tkinter import messagebox
 import mysql.connector
 import cv2
 # Testing Connection 
-"""
-conn = mysql.connector.connect(username='root', password='root',host='localhost',database='face_recognition',port=3307)
-cursor = conn.cursor()
 
-cursor.execute("show databases")
-
-data = cursor.fetchall()
-
-print(data)
-
-conn.close()
-"""
 class Student:
     def __init__(self,root):
         self.root=root
@@ -41,8 +30,8 @@ class Student:
 
     # This part is image labels setting start 
         # first header image  
-        img=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\banner.jpg")
-        img=img.resize((1366,130),Image.ANTIALIAS)
+        img=Image.open(r"Images_GUI/banner.jpg")
+        img=img.resize((1366,130),Image.Resampling.LANCZOS)
         self.photoimg=ImageTk.PhotoImage(img)
 
         # set image as lable
@@ -50,8 +39,8 @@ class Student:
         f_lb1.place(x=0,y=0,width=1366,height=130)
 
          # backgorund image 
-        bg1=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\bg3.jpg")
-        bg1=bg1.resize((1366,768),Image.ANTIALIAS)
+        bg1=Image.open(r"Images_GUI/bg3.jpg")
+        bg1=bg1.resize((1366,768),Image.Resampling.LANCZOS)
         self.photobg1=ImageTk.PhotoImage(bg1)
 
         # set image as lable
@@ -332,7 +321,7 @@ class Student:
             messagebox.showerror("Error","Please Fill All Fields are Required!",parent=self.root)
         else:
             try:
-                conn = mysql.connector.connect(username='root', password='root',host='localhost',database='face_recognition',port=3307)
+                conn = mysql.connector.connect(user='root', password='12345',host='localhost',database='face_recognition',port=3306)
                 mycursor = conn.cursor()
                 mycursor.execute("insert into student values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(
                 self.var_std_id.get(),
@@ -362,7 +351,7 @@ class Student:
     # ===========================Fetch data form database to table ================================
 
     def fetch_data(self):
-        conn = mysql.connector.connect(username='root', password='root',host='localhost',database='face_recognition',port=3307)
+        conn = mysql.connector.connect(user='root', password='12345',host='localhost',database='face_recognition',port=3306)
         mycursor = conn.cursor()
 
         mycursor.execute("select * from student")
@@ -405,7 +394,7 @@ class Student:
             try:
                 Update=messagebox.askyesno("Update","Do you want to Update this Student Details!",parent=self.root)
                 if Update > 0:
-                    conn = mysql.connector.connect(username='root', password='root',host='localhost',database='face_recognition',port=3307)
+                    conn = mysql.connector.connect(user='root', password='12345',host='localhost',database='face_recognition',port=3306)
                     mycursor = conn.cursor()
                     mycursor.execute("update student set Name=%s,Department=%s,Course=%s,Year=%s,Semester=%s,Division=%s,Gender=%s,DOB=%s,Mobile_No=%s,Address=%s,Roll_No=%s,Email=%s,Teacher_Name=%s,PhotoSample=%s where Student_ID=%s",( 
                     self.var_std_name.get(),
@@ -442,7 +431,7 @@ class Student:
             try:
                 delete=messagebox.askyesno("Delete","Do you want to Delete?",parent=self.root)
                 if delete>0:
-                    conn = mysql.connector.connect(username='root', password='root',host='localhost',database='face_recognition',port=3307)
+                    conn = mysql.connector.connect(user='root', password='12345',host='localhost',database='face_recognition',port=3306)
                     mycursor = conn.cursor() 
                     sql="delete from student where Student_ID=%s"
                     val=(self.var_std_id.get(),)
@@ -482,7 +471,7 @@ class Student:
             messagebox.showerror("Error","Select Combo option and enter entry box",parent=self.root)
         else:
             try:
-                conn = mysql.connector.connect(username='root', password='root',host='localhost',database='face_recognition',port=3307)
+                conn = mysql.connector.connect(user='root', password='12345',host='localhost',database='face_recognition',port=3306)
                 my_cursor = conn.cursor()
                 sql = "SELECT Student_ID,Name,Department,Course,Year,Semester,Division,Gender,DOB,Mobile_No,Address,Roll_No,Email,Teacher_Name,PhotoSample FROM student where Roll_No='" +str(self.var_search.get()) + "'" 
                 my_cursor.execute(sql)
@@ -508,7 +497,7 @@ class Student:
         else:
             try:
                 
-                conn = mysql.connector.connect(username='root', password='root',host='localhost',database='face_recognition',port=3307)
+                conn = mysql.connector.connect(user='root', password='12345',host='localhost',database='face_recognition',port=3306)
                 mycursor = conn.cursor()
                 mycursor.execute("select * from student")
                 myreslut = mycursor.fetchall()
@@ -554,7 +543,7 @@ class Student:
                 cap=cv2.VideoCapture(0)
                 img_id=0
                 while True:
-                    ret,my_frame=cap.read()
+                    _,my_frame=cap.read()
                     if face_croped(my_frame) is not None:
                         img_id+=1
                         face=cv2.resize(face_croped(my_frame),(200,200))

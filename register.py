@@ -21,7 +21,7 @@ class Register:
         self.var_cpwd=StringVar()
         self.var_check=IntVar()
 
-        self.bg=ImageTk.PhotoImage(file=r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\bgReg.jpg")
+        self.bg=ImageTk.PhotoImage(file=r"Images_GUI/bgReg.jpg")
         
         lb1_bg=Label(self.root,image=self.bg)
         lb1_bg.place(x=0,y=0, relwidth=1,relheight=1)
@@ -30,8 +30,8 @@ class Register:
         frame.place(x=100,y=80,width=900,height=580)
         
 
-        # img1=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\reg1.png")
-        # img1=img1.resize((450,100),Image.ANTIALIAS)
+        # img1=Image.open(r"Images_GUI/reg1.png")
+        # img1=img1.resize((450,100),Image.Resampling.LANCZOS)
         # self.photoimage1=ImageTk.PhotoImage(img1)
         # lb1img1 = Label(image=self.photoimage1,bg="#F2F2F2")
         # lb1img1.place(x=300,y=100, width=500,height=100)
@@ -41,7 +41,7 @@ class Register:
         get_str.place(x=350,y=130)
 
         #label1 
-        fname =lb1= Label(frame,text="First Name:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
+        fname = Label(frame,text="First Name:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
         fname.place(x=100,y=200)
 
         #entry1 
@@ -50,7 +50,7 @@ class Register:
 
 
         #label2 
-        lname =lb1= Label(frame,text="Last Name:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
+        lname = Label(frame,text="Last Name:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
         lname.place(x=100,y=270)
 
         #entry2 
@@ -60,7 +60,7 @@ class Register:
         # ==================== section 2 -------- 2nd Columan===================
 
         #label1 
-        cnum =lb1= Label(frame,text="Contact No:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
+        cnum = Label(frame,text="Contact No:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
         cnum.place(x=530,y=200)
 
         #entry1 
@@ -69,7 +69,7 @@ class Register:
 
 
         #label2 
-        email =lb1= Label(frame,text="Email:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
+        email = Label(frame,text="Email:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
         email.place(x=530,y=270)
 
         #entry2 
@@ -79,7 +79,7 @@ class Register:
         # ========================= Section 3 --- 1 Columan=================
 
         #label1 
-        ssq =lb1= Label(frame,text="Select Security Question:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
+        ssq = Label(frame,text="Select Security Question:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
         ssq.place(x=100,y=350)
 
         #Combo Box1
@@ -90,7 +90,7 @@ class Register:
 
 
         #label2 
-        sa =lb1= Label(frame,text="Security Answer:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
+        sa = Label(frame,text="Security Answer:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
         sa.place(x=100,y=420)
 
         #entry2 
@@ -100,7 +100,7 @@ class Register:
         # ========================= Section 4-----Column 2=============================
 
         #label1 
-        pwd =lb1= Label(frame,text="Password:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
+        pwd = Label(frame,text="Password:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
         pwd.place(x=530,y=350)
 
         #entry1 
@@ -109,7 +109,7 @@ class Register:
 
 
         #label2 
-        cpwd =lb1= Label(frame,text="Confirm Password:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
+        cpwd = Label(frame,text="Confirm Password:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
         cpwd.place(x=530,y=420)
 
         #entry2 
@@ -142,7 +142,7 @@ class Register:
         else:
             # messagebox.showinfo("Successfully","Successfully Register!")
             try:
-                conn = mysql.connector.connect(username='root', password='root',host='localhost',database='face_recognition',port=3307)
+                conn = mysql.connector.connect(user='root', password='12345',host='localhost',database='face_recognition',port=3306)
                 mycursor = conn.cursor()
                 query=("select * from regteach where email=%s")
                 value=(self.var_email.get(),)
@@ -159,6 +159,7 @@ class Register:
                     self.var_ssq.get(),
                     self.var_sa.get(),
                     self.var_pwd.get()
+                    
                     ))
 
                     conn.commit()
