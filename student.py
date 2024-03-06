@@ -41,7 +41,7 @@ class Student:
 
     # This part is image labels setting start 
         # first header image  
-        img=Image.open(r"Images_GUI\banner.jpg")
+        img=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\banner.jpg")
         img=img.resize((1366,130),Image.ANTIALIAS)
         self.photoimg=ImageTk.PhotoImage(img)
 
@@ -50,7 +50,7 @@ class Student:
         f_lb1.place(x=0,y=0,width=1366,height=130)
 
          # backgorund image 
-        bg1=Image.open(r"Images_GUI\bg3.jpg")
+        bg1=Image.open(r"C:\Users\Muhammad Waseem\Documents\Python_Test_Projects\Images_GUI\bg3.jpg")
         bg1=bg1.resize((1366,768),Image.ANTIALIAS)
         self.photobg1=ImageTk.PhotoImage(bg1)
 
@@ -81,7 +81,7 @@ class Student:
 
         #combo box 
         dep_combo=ttk.Combobox(current_course_frame,textvariable=self.var_dep,width=15,font=("verdana",12,"bold"),state="readonly")
-        dep_combo["values"]=("Select Department","BSCS","BSIT","BCOM","BAF")
+        dep_combo["values"]=("Select Department","BSCS","BSIT","BSENG","BSPHY","BSMATH")
         dep_combo.current(0)
         dep_combo.grid(row=0,column=1,padx=5,pady=15,sticky=W)
 
@@ -93,7 +93,7 @@ class Student:
 
         #combo box 
         cou_combo=ttk.Combobox(current_course_frame,textvariable=self.var_course,width=15,font=("verdana",12,"bold"),state="readonly")
-        cou_combo["values"]=("Select Course","BSC","MSC")
+        cou_combo["values"]=("Select Course","SE","FE","TE","BE","MS")
         cou_combo.current(0)
         cou_combo.grid(row=0,column=3,padx=5,pady=15,sticky=W)
 
@@ -105,7 +105,7 @@ class Student:
 
         #combo box 
         year_combo=ttk.Combobox(current_course_frame,textvariable=self.var_year,width=15,font=("verdana",12,"bold"),state="readonly")
-        year_combo["values"]=("Select Year","2021-22","2023-24","2025-26")
+        year_combo["values"]=("Select Year","2017-21","2018-22","2019-23","2020-24","2021-25")
         year_combo.current(0)
         year_combo.grid(row=1,column=1,padx=5,pady=15,sticky=W)
 
@@ -117,7 +117,7 @@ class Student:
 
         #combo box 
         year_combo=ttk.Combobox(current_course_frame,textvariable=self.var_semester,width=15,font=("verdana",12,"bold"),state="readonly")
-        year_combo["values"]=("Select Semester","Semester-1","Semester-2","Semester-3","Semester-4","Semester-5","Semester-6")
+        year_combo["values"]=("Select Semester","Semester-1","Semester-2","Semester-3","Semester-4","Semester-5","Semester-6","Semester-7","Semester-8")
         year_combo.current(0)
         year_combo.grid(row=1,column=3,padx=5,pady=15,sticky=W)
 
@@ -342,7 +342,7 @@ class Student:
                 self.var_year.get(),
                 self.var_semester.get(),
                 self.var_div.get(),
-                self .var_gender.get(),
+                self.var_gender.get(),
                 self.var_dob.get(),
                 self.var_mob.get(),
                 self.var_address.get(),
